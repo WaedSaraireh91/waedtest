@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6313710E2E350A7500CE4957 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6313710D2E350A7500CE4957 /* Alamofire */; };
+		631371102E350A7500CE4957 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 6313710F2E350A7500CE4957 /* AlamofireDynamic */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		631370EC2E35077600CE4957 /* native iOS Application - Waed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "native iOS Application - Waed.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6313710E2E350A7500CE4957 /* Alamofire in Frameworks */,
+				631371102E350A7500CE4957 /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = "native iOS Application - Waed";
 			packageProductDependencies = (
+				6313710D2E350A7500CE4957 /* Alamofire */,
+				6313710F2E350A7500CE4957 /* AlamofireDynamic */,
 			);
 			productName = "native iOS Application - Waed";
 			productReference = 631370EC2E35077600CE4957 /* native iOS Application - Waed.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = 631370E32E35077600CE4957;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6313710C2E350A7500CE4957 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 631370ED2E35077600CE4957 /* Products */;
 			projectDirPath = "";
@@ -333,6 +345,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6313710C2E350A7500CE4957 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6313710D2E350A7500CE4957 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6313710C2E350A7500CE4957 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		6313710F2E350A7500CE4957 /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6313710C2E350A7500CE4957 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 631370E42E35077600CE4957 /* Project object */;
 }
