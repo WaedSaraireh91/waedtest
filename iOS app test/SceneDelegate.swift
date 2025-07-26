@@ -1,9 +1,7 @@
 //
 //  SceneDelegate.swift
 //  iOS app test
-//
-//  Created by Majd Attely on 26/07/2025.
-//
+
 
 import UIKit
 

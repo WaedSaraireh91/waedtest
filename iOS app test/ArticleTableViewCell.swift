@@ -1,9 +1,7 @@
 //
 //  ArticleTableViewCell.swift
 //  native iOS Application - Waed
-//
-//  Created by Majd Attely on 26/07/2025.
-//
+
 
 import UIKit
 
