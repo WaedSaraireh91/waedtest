@@ -11,47 +11,60 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @IBOutlet weak var tableView: UITableView!
-    
+    private let vm = NewsViewModel()
+    private let refreshControl = UIRefreshControl()
+    @objc private func refreshNews() { vm.getNews() }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let nib = UINib(nibName: "ArticleTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "articleSB")
-        // Do any additional setup after loading the view.
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 800
+
+        refreshControl.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+               tableView.refreshControl = refreshControl
         
-        NewsViewModel.viewModel.getNews {
-               self.tableView.reloadData()
-           }
+        vm.onUpdate = { [weak self] in
+                    self?.tableView.reloadData()
+                    self?.refreshControl.endRefreshing()
+                }
+                vm.onError = { [weak self] message in
+                    self?.refreshControl.endRefreshing()
+                    self?.showError(message)
+                }
+                vm.getNews()
     }
     
+    private func showError(_ message: String) {
+          let ac = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+          ac.addAction(UIAlertAction(title: "OK", style: .default))
+          present(ac, animated: true)
+      }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return NewsViewModel.viewModel.articles.count
+        vm.articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "articleSB", for: indexPath) as? ArticleTableViewCell else {
-            return UITableViewCell()
-        }
-        let article = NewsViewModel.viewModel.articles[indexPath.row]
-        cell.configure(with: article) 
-        
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "articleSB", for: indexPath) as! ArticleTableViewCell
+         cell.configure(with: vm.articles[indexPath.row])
+         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let article = NewsViewModel.viewModel.articles[indexPath.row]
-        
-        let storyboard = UIStoryboard(name: "ArticleDetailView", bundle: nil)
-        let detailVC = storyboard.instantiateViewController(withIdentifier: "ArticleDetailViewController") as! ArticleDetailViewController
-        detailVC.article = article
-        navigationController?.pushViewController(detailVC, animated: true)
+          let article = vm.articles[indexPath.row]
+          let sb = UIStoryboard(name: "ArticleDetailView", bundle: nil)
+          let vc = sb.instantiateViewController(withIdentifier: "ArticleDetailViewController") as! ArticleDetailViewController
+          vc.article = article
+          navigationController?.pushViewController(vc, animated: true)
     }
 
 }

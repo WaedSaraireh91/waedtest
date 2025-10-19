@@ -16,21 +16,17 @@ class ArticleDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Load data into UI
         titleLabel.text = article?.title
         authorLabel.text = article?.author ?? "Unknown Author"
         descriptionLabel.text = article?.description ?? "No description available"
 
-        if let urlString = article?.urlToImage, let url = URL(string: urlString) {
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.articleImageView.image = image
-                    }
-                }
+        if let s = article?.urlToImage, let url = URL(string: s) {
+            ImageLoader.shared.load(url) { [weak self] image in
+                self?.articleImageView.image = image ?? UIImage(systemName: "photo")
             }
         } else {
             articleImageView.image = UIImage(systemName: "photo")
         }
+
     }
 }
